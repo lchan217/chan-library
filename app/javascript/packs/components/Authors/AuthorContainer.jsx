@@ -21,8 +21,8 @@ class Authors extends Component {
   }
 
   handleClick = (event) => {
-    const id = event.target.parentElement.id
-
+    const id = event.target.id
+    
     fetch(`http://localhost:3000/api/v1/authors/${id}`)
     .then(response => response.json())
     .then(response => {
@@ -58,7 +58,8 @@ class Authors extends Component {
 
     return (
       <div >
-        Authors
+        <h1>Authors</h1>
+        <h6>Pick a row to see the author and their Books</h6>
         {authorData}
       </div>
     );
