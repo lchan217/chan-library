@@ -1,0 +1,1 @@
+json.array! @references, partial: "api/v1/references/reference" as: :reference
