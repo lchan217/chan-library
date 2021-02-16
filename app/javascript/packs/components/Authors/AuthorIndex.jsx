@@ -8,7 +8,7 @@ const AuthorIndex = (props) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Books</th>
+            <th>Book(s)</th>
           </tr>
         </thead>
         <tbody>

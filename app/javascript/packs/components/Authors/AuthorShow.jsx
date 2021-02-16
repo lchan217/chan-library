@@ -1,13 +1,13 @@
 import React from 'react';
-import Book from '../Books/Book'
+import AuthorBook from './AuthorBook'
 
 const AuthorShow = (props) => {
   const { name, books } = props.author
   return (
     <div>
-      {name}
+      <h3>{name}</h3>
       {books.map((book, index) => (
-        <Book key={index} book={book} />
+        <AuthorBook key={index} book={book} />
       ))}
     </div>
   );

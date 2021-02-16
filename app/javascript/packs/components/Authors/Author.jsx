@@ -1,5 +1,5 @@
 import React from 'react';
-import Book from '../Books/Book'
+import AuthorBook from './AuthorBook'
 
 const Author = (props) => {
   const { name, books, id } = props.author
@@ -10,7 +10,7 @@ const Author = (props) => {
         <td id={id}>{name}</td>
         <td>
           {books.map((book, index) => (
-            <Book 
+            <AuthorBook 
               key={index} 
               book={book}
               authorId={id}/>
