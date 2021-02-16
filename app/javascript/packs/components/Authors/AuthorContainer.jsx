@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AuthorIndex from './AuthorIndex'
 import AuthorShow from './AuthorShow'
 
-class Authors extends Component {
+class AuthorContainer extends Component {
   state = {
     authors: [],
     authorShowPage: false,
@@ -66,4 +66,4 @@ class Authors extends Component {
   }
 }
 
-export default Authors;
+export default AuthorContainer;
