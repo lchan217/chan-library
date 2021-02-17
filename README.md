@@ -1,24 +1,16 @@
-# README
+# Library by L. Chan
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Instructions
 
-Things you may want to cover:
+Clone the project from GitHub and run the steps below in order to run the project locally.
 
-* Ruby version
+1. rake db:create
+2. rake db:migrate
+3. rake db:seed (data comes from books on my Goodreads shelves)
+4. rails s
 
-* System dependencies
+## To Do:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Styling
+- Handling errors, editing, and deleting reference
+- Writing tests
