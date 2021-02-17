@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import AuthorContainer from './Authors/AuthorContainer'
-import BookContainer from './Books/BookContainer'
-
+import AuthorContainer from './Containers/AuthorContainer'
+import BookContainer from './Containers/BookContainer'
+import ReferenceContainer from './Containers/ReferenceContainer'
 class LibraryApp extends React.Component {
   state = {
     showBooks: false
@@ -17,10 +17,10 @@ class LibraryApp extends React.Component {
     let showContent = null
     let page = null
     if(this.state.showBooks){
-      showContent = (<BookContainer />)
+      showContent = <BookContainer />
       page = "Author"
     } else {
-      showContent = (<AuthorContainer />)
+      showContent = <AuthorContainer />
       page = "Book"
     }
 
@@ -28,6 +28,7 @@ class LibraryApp extends React.Component {
       <div>
         <p>Library App</p>
         <button onClick={this.handleClick}>Switch to {page} View</button>
+        <ReferenceContainer />
         {showContent}
       </div>
     )

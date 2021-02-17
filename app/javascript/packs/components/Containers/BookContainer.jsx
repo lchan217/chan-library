@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import BookShow from './BookShow'
-import BookIndex from './BookIndex'
+import BookShow from '../Books/BookShow'
+import BookIndex from '../Books/BookIndex'
 
 class BookContainer extends Component {
   state = {

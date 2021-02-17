@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AuthorIndex from './AuthorIndex'
-import AuthorShow from './AuthorShow'
+import AuthorIndex from '../Authors/AuthorIndex'
+import AuthorShow from '../Authors/AuthorShow'
 
 class AuthorContainer extends Component {
   state = {

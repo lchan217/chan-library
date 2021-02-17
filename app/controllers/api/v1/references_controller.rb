@@ -9,7 +9,9 @@ class Api::V1::ReferencesController < ApplicationController
     end
 
     def create
-        Reference.create(reference_params)
+      reference = Reference.create(reference_params)
+      reference.parse_params(params)
+      reference.save
     end
 
     def update
@@ -27,6 +29,6 @@ class Api::V1::ReferencesController < ApplicationController
 
     def reference_params
         #TODO: book params
-        params.require(:reference).permit(:name)
+        params.require(:reference).permit(:name, book_attributes: [:id, :title])
     end
 end
