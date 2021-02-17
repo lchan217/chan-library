@@ -1,3 +1,3 @@
 json.extract! reference, :id, :name
 
-json.books = reference.books
+json.books reference.books
