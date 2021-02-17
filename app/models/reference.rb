@@ -10,6 +10,5 @@ class Reference < ApplicationRecord
         book_id = book[:id]
         books << Book.find(book_id)
       end
-      binding.pry
     end
 end
