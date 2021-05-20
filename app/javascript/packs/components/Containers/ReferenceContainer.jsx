@@ -37,19 +37,19 @@ const ReferenceContainer = () => {
   let action = 'show'
   let refIndexPage = null
   if(showRefIndex){
-      refIndexPage = <ReferenceIndex references={references} />
-      action = 'Hide'
+		refIndexPage = <ReferenceIndex references={references} />
+		action = 'Hide'
   } else {
-      action = 'Show'
+    action = 'Show'
   }
 
   return (
-      <div>
-        <button onClick={handleFormClick}>Create New Reference</button>
-        {showForm && <ReferenceForm allBooks={books} reference={referenceForForm} /> }
-        <button onClick={handleIndexClick}>{action} All References</button>
-        {refIndexPage}
-      </div>
+		<div>
+			<button onClick={handleFormClick}>Create New Reference</button>
+			{showForm && <ReferenceForm allBooks={books} reference={referenceForForm} /> }
+			<button onClick={handleIndexClick}>{action} All References</button>
+			{refIndexPage}
+		</div>
   );
 }
 
