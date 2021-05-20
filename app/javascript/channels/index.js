@@ -3,3 +3,5 @@
 
 const channels = require.context('.', true, /_channel\.js$/)
 channels.keys().forEach(channels)
+
+import 'semantic-ui-css/semantic.min.css'
