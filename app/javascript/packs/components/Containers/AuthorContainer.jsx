@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import AuthorIndex from '../Authors/AuthorIndex'
 import AuthorShow from '../Authors/AuthorShow'
+import Spinner from '../../ui/Spinner'
 
 const AuthorContainer = () => {
   const [ authors, setAuthors ] = useState([])
   const [ authorShowPage, setAuthorShowPage ] = useState(false)
   const [ author, setAuthor ] = useState([])
+  const [ isLoading, setIsLoading ] = useState(true)
 
   useEffect(() => {
     fetch("http://localhost:3000/api/v1/authors")
       .then(response => response.json())
       .then(responseData => {
         setAuthors(responseData)
+        setIsLoading(false)
       })
       .catch(error => console.log(error))
   }, [])
@@ -32,7 +35,7 @@ const AuthorContainer = () => {
     setAuthorShowPage(false)
   }
   
-  let authorData = null
+  let authorData = <Spinner />
 
   if(authorShowPage){
     authorData = (
@@ -41,7 +44,7 @@ const AuthorContainer = () => {
         <AuthorShow author={author}/>
       </div>
     )
-  } else {
+  } else if(!isLoading){
     authorData = (
       <div onClick={handleClick}>
         <AuthorIndex authors={authors} />

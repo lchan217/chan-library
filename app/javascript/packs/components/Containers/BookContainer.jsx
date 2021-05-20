@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import BookShow from '../Books/BookShow'
 import BookIndex from '../Books/BookIndex'
+import Spinner from '../../ui/Spinner'
 
 const BookContainer = () => {
   const [ books, setBooks ] = useState([])
   const [ bookShowPage, setBookShowPage ] = useState(false)
   const [ book, setBook ] = useState([])
+  const [ isLoading, setIsLoading ] = useState(true)
 
   useEffect(()=> {
     fetch("http://localhost:3000/api/v1/books")
     .then(response => response.json())
     .then(response => {
       setBooks(response)
+      setIsLoading(false)
     })
     .catch(error => console.log(error))
   }, [])
@@ -31,7 +34,7 @@ const BookContainer = () => {
     setBookShowPage(false)
   }
 
-  let bookData = null
+  let bookData = <Spinner />
 
   if(bookShowPage){
     bookData = (
@@ -40,7 +43,7 @@ const BookContainer = () => {
         <BookShow book={book}/>
       </div>
     )
-  } else {
+  } else if(!isLoading){
     bookData = (
       <div onClick={handleClick}>
         <BookIndex books={books} />
