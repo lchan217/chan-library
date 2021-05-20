@@ -6,7 +6,7 @@ const ReferenceContainer = () => {
   const [ books, setBooks ] = useState([])
   const [ references, setReferences ] = useState([])
   const [ showForm, setShowForm ] = useState(false)
-  const [ showIndex, setShowIndex ] = useState(false)
+  const [ showRefIndex, setShowRefIndex ] = useState(false)
   const [ referenceForForm, setReferenceForForm ] = useState({name: '', books: []})
   
   useEffect(() => {
@@ -31,14 +31,13 @@ const ReferenceContainer = () => {
   }
 
   const handleIndexClick = () => {
-    const showIndex = showIndex
-    setShowIndex(!showIndex)
+    setShowRefIndex(!showRefIndex)
   }
 
   let action = 'show'
-  let showIndexPage = null
-  if(showIndex){
-      showIndexPage = <ReferenceIndex references={references} />
+  let refIndexPage = null
+  if(showRefIndex){
+      refIndexPage = <ReferenceIndex references={references} />
       action = 'Hide'
   } else {
       action = 'Show'
@@ -49,7 +48,7 @@ const ReferenceContainer = () => {
         <button onClick={handleFormClick}>Create New Reference</button>
         {showForm && <ReferenceForm allBooks={books} reference={referenceForForm} /> }
         <button onClick={handleIndexClick}>{action} All References</button>
-        {showIndexPage}
+        {refIndexPage}
       </div>
   );
 }
