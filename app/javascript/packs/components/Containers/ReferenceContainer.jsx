@@ -1,68 +1,57 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReferenceForm from '../References/ReferenceForm'
 import ReferenceIndex from '../References/ReferenceIndex'
-class ReferenceContainer extends Component {
-  state = {
-    books: [],
-    showForm: false,
-    references: [],
-    showIndex: false
-  }
 
-  componentDidMount() {
+const ReferenceContainer = () => {
+  const [ books, setBooks ] = useState([])
+  const [ references, setReferences ] = useState([])
+  const [ showForm, setShowForm ] = useState(false)
+  const [ showIndex, setShowIndex ] = useState(false)
+  const [ referenceForForm, setReferenceForForm ] = useState({name: '', books: []})
+  
+  useEffect(() => {
     fetch("http://localhost:3000/api/v1/books")
       .then(response => response.json())
-      .then(response => {
-        this.setState({
-            books: response
-        })
+      .then(bookResponse => {
+        setBooks(bookResponse)
       })
       .catch(error => console.log(error))
-
-      fetch("http://localhost:3000/api/v1/references")
+    
+    fetch("http://localhost:3000/api/v1/references")
       .then(response => response.json())
-      .then(response => {
-        this.setState({
-            references: response
-        })
+      .then(referenceData => {
+        setReferences(referenceData)
       })
       .catch(error => console.log(error))
+
+  }, [])
+
+  const handleFormClick = () => {
+    setShowForm(true)
   }
 
-  handleFormClick = () => {
-    this.setState({ showForm: true })
+  const handleIndexClick = () => {
+    const showIndex = showIndex
+    setShowIndex(!showIndex)
   }
 
-  handleIndexClick = () => {
-    const showIndex = this.state.showIndex
-    this.setState({ showIndex: !showIndex })
-  }
-
-  render() {
-    let showRefForm = null
-    let action = 'show'
-
-    if(this.state.showForm){
-      showRefForm = <ReferenceForm books={this.state.books} /> 
-    }
-
-    let showIndex = null
-    if(this.state.showIndex){
-      showIndex = <ReferenceIndex references={this.state.references} />
+  let action = 'show'
+  let showIndexPage = null
+  if(showIndex){
+      showIndexPage = <ReferenceIndex references={references} />
       action = 'Hide'
-    } else {
+  } else {
       action = 'Show'
-    }
-
-    return (
-      <div>
-        <button onClick={this.handleFormClick}>Create New Reference</button>
-        {showRefForm}
-        <button onClick={this.handleIndexClick}>{action} All References</button>
-        {showIndex}
-      </div>
-    );
   }
+
+  return (
+      <div>
+      <button onClick={handleFormClick}>Create New Reference</button>
+      {showForm && <ReferenceForm allBooks={books} reference={referenceForForm} /> }
+      <button onClick={handleIndexClick}>{action} All References</button>
+      {showIndexPage}
+      </div>
+  );
 }
 
 export default ReferenceContainer;

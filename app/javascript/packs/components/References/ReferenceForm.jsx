@@ -1,54 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect }  from 'react';
 import { Multiselect } from 'multiselect-react-dropdown';
 
-class ReferenceForm extends Component {
-  constructor(props) {
-    super(props)
-    this.nameRef = React.createRef()
-    this.multiselectRef = React.createRef();
-  }
+const ReferenceForm = (props) => {
+  const { books, reference, allBooks } = props
+	const [ referenceName, setReferenceName] = useState('')
+	const [ bookAttributes, setBookAttributes] = useState([])
 
-  handleSubmit = () => {
-    
-    const body = {
-      name: this.nameRef.current.value,
-      book_attributes: this.multiselectRef.current.state.selectedValues
-    };
+  useEffect(() => {
+    setReferenceName(reference.name)
+    setBookAttributes(reference.books)
+  }, [reference])
 
-    fetch("http://localhost:3000/api/v1/references", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then(resp => resp.json())
-  }
+	const handleSubmit = () => {
+		const body = {
+			name: referenceName,
+			book_attributes: bookAttributes
+		};
+			
+		fetch("http://localhost:3000/api/v1/references", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+			.then(resp => resp.json())
+	}
 
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input
-             type="text"
-             name="name"
-             ref={this.nameRef}
-             placeholder="Shared Reference Name"/>
-          </label>
-          <Multiselect
-            options={this.props.books}
-            displayValue="title"
-            ref={this.multiselectRef}
-            avoidHighlightFirstOption={true}
-          />
-          <button>Submit</button>
-        </form>
-      </div>
-    );
-  }
-}
+	const onSelect = (selectedList, selectedItem) => {
+		setBookAttributes([...bookAttributes, selectedItem])
+	}
+
+	const onRemove  = (selectedList, selectedItem) => {
+		setBookAttributes(bookAttributes.filter(book => book !== selectedItem))
+	}
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<input 
+				type="text" 
+				value={referenceName} 
+				onChange={event => {
+					setReferenceName(event.target.value)
+				}}
+      />
+
+			<Multiselect
+				options={allBooks}
+				displayValue="title"
+				value={bookAttributes}
+				avoidHighlightFirstOption={true}
+				onSelect={onSelect}
+				onRemove={onRemove}
+        selectedValues={books}
+			/>
+			<button>Submit</button>
+		</form>
+	);
+};
 
 export default ReferenceForm;
