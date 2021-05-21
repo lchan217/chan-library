@@ -25,6 +25,7 @@ const Reference = (props) => {
         Accept: "application/json"
       }
     })
+    window.location.reload();
   }
 
   const editReference = id => {
