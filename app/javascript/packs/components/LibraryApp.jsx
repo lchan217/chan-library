@@ -1,38 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import AuthorContainer from './Containers/AuthorContainer'
 import BookContainer from './Containers/BookContainer'
 import ReferenceContainer from './Containers/ReferenceContainer'
-class LibraryApp extends React.Component {
-  state = {
-    showBooks: false
+
+const LibraryApp = () => {
+  const [showBooks, setShowBooks] = useState(false)
+
+  const handleClick = () => {
+    const currentView = showBooks
+    setShowBooks(!currentView)
   }
 
-  handleClick = () => {
-    const currentView = this.state.showBooks
-    this.setState({ showBooks: !currentView })
+  let showContent = null
+  let page = null
+  if(showBooks){
+    showContent = <BookContainer />
+    page = "Author"
+  } else {
+    showContent = <AuthorContainer />
+    page = "Book"
   }
 
-  render() {
-    let showContent = null
-    let page = null
-    if(this.state.showBooks){
-      showContent = <BookContainer />
-      page = "Author"
-    } else {
-      showContent = <AuthorContainer />
-      page = "Book"
-    }
-
-    return (
-      <div>
-        <p>Library App</p>
-        <button onClick={this.handleClick}>Switch to {page} View</button>
-        <ReferenceContainer />
-        {showContent}
-      </div>
-    )
-  }
+  return (
+    <div>
+      <button onClick={handleClick}>Switch to {page} View</button>
+      <ReferenceContainer />
+      {showContent}
+    </div>
+  ) 
 }
 
 document.addEventListener('turbolinks:load', () => {
