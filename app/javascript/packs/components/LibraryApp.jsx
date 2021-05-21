@@ -1,21 +1,36 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import AuthorContainer from './Containers/AuthorContainer'
 import BookContainer from './Containers/BookContainer'
 import ReferenceContainer from './Containers/ReferenceContainer'
-import NavBar from './NavBar/NavBar'
 class LibraryApp extends React.Component {
+  state = {
+    showBooks: false
+  }
+
+  handleClick = () => {
+    const currentView = this.state.showBooks
+    this.setState({ showBooks: !currentView })
+  }
 
   render() {
-    return (   
-      <Router>
-        <NavBar />
-        <Redirect from="/" to="/books"/>
-        <Route path="/books" component={BookContainer} exact />
-        <Route path="/authors" component={AuthorContainer} />
-        <Route path="/references" component={ReferenceContainer} />
-      </Router>   
+    let showContent = null
+    let page = null
+    if(this.state.showBooks){
+      showContent = <BookContainer />
+      page = "Author"
+    } else {
+      showContent = <AuthorContainer />
+      page = "Book"
+    }
+
+    return (
+      <div>
+        <p>Library App</p>
+        <button onClick={this.handleClick}>Switch to {page} View</button>
+        <ReferenceContainer />
+        {showContent}
+      </div>
     )
   }
 }
