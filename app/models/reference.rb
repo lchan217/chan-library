@@ -6,6 +6,7 @@ class Reference < ApplicationRecord
 
     def parse_params(params)
       book_params = params[:book_attributes]
+      books.clear
       book_params.each do |book|
         book_id = book[:id]
         books << Book.find(book_id)
