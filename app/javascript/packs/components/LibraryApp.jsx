@@ -6,26 +6,42 @@ import ReferenceContainer from './Containers/ReferenceContainer'
 
 const LibraryApp = () => {
   const [showBooks, setShowBooks] = useState(false)
+  const [showAuthors, setShowAuthors] = useState(true)
+  const [showReferences, setShowReferences] = useState(false)
 
-  const handleClick = () => {
-    const currentView = showBooks
-    setShowBooks(!currentView)
+  const handleClick = (page) => {
+    if(page === 'authors'){
+      setShowBooks(false)
+      setShowAuthors(true)
+      setShowReferences(false)
+    } else if(page === 'books'){
+      setShowBooks(true)
+      setShowAuthors(false)
+      setShowReferences(false)
+    } else if(page === 'references'){
+      setShowBooks(false)
+      setShowAuthors(false)
+      setShowReferences(true)
+    }
   }
 
   let showContent = null
-  let page = null
+
   if(showBooks){
     showContent = <BookContainer />
-    page = "Author"
-  } else {
+  } else if(showAuthors){
     showContent = <AuthorContainer />
-    page = "Book"
+  } else if(showReferences){
+    showContent = <ReferenceContainer />
   }
 
   return (
     <div>
-      <button onClick={handleClick}>Switch to {page} View</button>
-      <ReferenceContainer />
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <li className="nav-item" onClick={() => handleClick('authors')}>Authors</li>
+        <li className="nav-item" onClick={() => handleClick('books')}>Books</li>
+        <li className="nav-item" onClick={() => handleClick('references')}>References</li>
+      </nav>
       {showContent}
     </div>
   ) 
