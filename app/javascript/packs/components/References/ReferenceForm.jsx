@@ -2,9 +2,9 @@ import React, { useState, useEffect }  from 'react';
 import { Multiselect } from 'multiselect-react-dropdown';
 
 const ReferenceForm = (props) => {
-  const { books, reference, allBooks } = props
-	const [ referenceName, setReferenceName] = useState('')
-	const [ bookAttributes, setBookAttributes] = useState([])
+  const { books, reference, allBooks, editId } = props
+  const [ referenceName, setReferenceName] = useState('')
+  const [ bookAttributes, setBookAttributes] = useState([])
 
   useEffect(() => {
     setReferenceName(reference.name)
@@ -12,28 +12,39 @@ const ReferenceForm = (props) => {
   }, [reference])
 
 	const handleSubmit = () => {
-		const body = {
+    const body = {
 			name: referenceName,
 			book_attributes: bookAttributes
-		};
-			
-		fetch("http://localhost:3000/api/v1/references", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json"
-			},
-			body: JSON.stringify(body)
-		})
-			.then(resp => resp.json())
+	  };
+    if(editId){
+      fetch(`http://localhost:3000/api/v1/references/${editId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+        },
+      body: JSON.stringify(body)
+      })
+      .then(resp => resp.json())
+    } else {
+      fetch("http://localhost:3000/api/v1/references", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(body)
+      })
+      .then(resp => resp.json())
+    }	
 	}
 
 	const onSelect = (selectedList, selectedItem) => {
-		setBookAttributes([...bookAttributes, selectedItem])
+		setBookAttributes(selectedList)
 	}
 
 	const onRemove  = (selectedList, selectedItem) => {
-		setBookAttributes(bookAttributes.filter(book => book !== selectedItem))
+		setBookAttributes(selectedList)
 	}
 
 	return (

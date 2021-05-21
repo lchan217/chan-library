@@ -16,6 +16,8 @@ class Api::V1::ReferencesController < ApplicationController
 
     def update
         @reference.update(reference_params)
+        @reference.parse_params(params)
+        @reference.save
     end
 
     def destroy
@@ -28,7 +30,6 @@ class Api::V1::ReferencesController < ApplicationController
     end
 
     def reference_params
-        #TODO: book params
         params.require(:reference).permit(:name, book_attributes: [:id, :title])
     end
 end

@@ -5,6 +5,7 @@ import ReferenceForm from './ReferenceForm'
 const Reference = (props) => {
   const { name, id } = props.reference
   const [showEditForm, setShowEditForm] = useState(false)
+  const [editId, setEditId] = useState('')
   const [reference, setReference] = useState({})
   const [books, setBooks] = useState()
 
@@ -35,6 +36,7 @@ const Reference = (props) => {
         setReference(responseData)
     })
     setShowEditForm(true)
+    setEditId(id)
   }
 
   return (
@@ -47,7 +49,7 @@ const Reference = (props) => {
             <button onClick={() => editReference(id)}>Edit Reference</button>
             <button onClick={() => deleteReference(id)}>Delete Reference</button>
 
-            {showEditForm && <ReferenceForm books={props.reference.books} reference={reference} allBooks={books} />}
+            {showEditForm && <ReferenceForm books={props.reference.books} reference={reference} allBooks={books} editId={editId}/>}
           </div>
         </div>
       </div>
