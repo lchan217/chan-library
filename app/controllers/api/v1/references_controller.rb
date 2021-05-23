@@ -24,7 +24,7 @@ class Api::V1::ReferencesController < ApplicationController
         if @reference.save
             render json: { status: "Success"}
         else 
-            render json: { status: "Error", message: @reference.errors.full_messages.to_sentence }
+            render json: { status: "Error", error: @reference.errors.full_messages.to_sentence }
         end
     end
 

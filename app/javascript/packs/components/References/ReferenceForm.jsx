@@ -20,15 +20,23 @@ const ReferenceForm = (props) => {
       book_attributes: bookAttributes
     };
     if(editId){
-    fetch(`http://localhost:3000/api/v1/references/${editId}`, {
-    method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-        },
-      body: JSON.stringify(body)
-      })
+      fetch(`http://localhost:3000/api/v1/references/${editId}`, {
+      method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+          },
+        body: JSON.stringify(body)
+        })
       .then(resp => resp.json())
+      .then(data => {
+        if(data.status === "Error"){
+          setErrorMessage(data.error)
+        } else {
+          setErrorMessage('')
+          location.reload()
+        }
+      })
     } else {
       fetch("http://localhost:3000/api/v1/references", {
         method: "POST",
