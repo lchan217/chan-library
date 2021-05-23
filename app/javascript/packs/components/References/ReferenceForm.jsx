@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback }  from 'react';
 import { Multiselect } from 'multiselect-react-dropdown';
-import ErrorModal from '../../ui/ErrorModal'
+import Modal from '../../ui/Modal'
 
 const ReferenceForm = (props) => {
   const { books, reference, allBooks, editId } = props
@@ -64,7 +64,7 @@ const ReferenceForm = (props) => {
 
 	return (
     <div>
-      {errorMessage && <ErrorModal error={errorMessage} onClose={clearError} />}
+      {errorMessage && <Modal error={errorMessage} onClose={clearError} />}
       <form onSubmit={handleSubmit}>
         <input 
           type="text" 
