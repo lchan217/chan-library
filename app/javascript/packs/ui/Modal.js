@@ -3,7 +3,7 @@ import React from 'react';
 const Modal = (props) => {
   return (
     <div className='lib-modal'>
-      {props.error}
+      {props.children}
       <button onClick={props.onClose} className="close-button">Close</button>
     </div>
   );

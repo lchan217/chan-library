@@ -64,7 +64,7 @@ const ReferenceForm = (props) => {
 
 	return (
     <div>
-      {errorMessage && <Modal error={errorMessage} onClose={clearError} />}
+      {errorMessage && <Modal onClose={clearError}>{errorMessage}</Modal>}
       <form onSubmit={handleSubmit}>
         <input 
           type="text" 
