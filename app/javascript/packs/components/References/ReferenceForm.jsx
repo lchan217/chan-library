@@ -70,18 +70,23 @@ const ReferenceForm = (props) => {
     setErrorMessage('')
   }, [])
 
+
 	return (
     <div>
       {errorMessage && <Modal onClose={clearError}>{errorMessage}</Modal>}
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="text" 
-          value={referenceName} 
-          onChange={event => {
-            setReferenceName(event.target.value)
-          }}
-        />
-
+      <form onSubmit={handleSubmit} className="reference-form">
+        <label>
+          Name:
+          <input 
+            type="text" 
+            value={referenceName} 
+            onChange={event => {
+                setReferenceName(event.target.value)
+            }}
+            className="form-item"
+          />
+        </label>
+        <br/>
         <Multiselect
           options={allBooks}
           displayValue="title"
@@ -90,8 +95,10 @@ const ReferenceForm = (props) => {
           onSelect={onSelect}
           onRemove={onRemove}
           selectedValues={books}
+          className="form-item"
+          placeholder="Select Books"
         />
-        <button>Submit</button>
+        <button className="btn btn-secondary form-item submit-button">Submit</button>
       </form>
     </div>
 	);

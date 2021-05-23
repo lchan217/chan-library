@@ -31,7 +31,7 @@ const ReferenceContainer = () => {
 
   return (
       <div>
-        <button onClick={handleFormClick}>Create New Reference</button>
+        <button onClick={handleFormClick} type="button" className="btn btn-primary">Create New Reference</button>
         {showForm && <ReferenceForm allBooks={books} reference={referenceForForm} /> }
         <ReferenceIndex references={references} />
       </div>

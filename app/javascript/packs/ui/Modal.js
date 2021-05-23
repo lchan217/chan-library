@@ -4,7 +4,7 @@ const Modal = (props) => {
   return (
     <div className='lib-modal'>
       {props.children}
-      <button onClick={props.onClose} className="close-button">Close</button>
+      <button onClick={props.onClose} className="btn btn-secondary close-button">Close</button>
     </div>
   );
 };
