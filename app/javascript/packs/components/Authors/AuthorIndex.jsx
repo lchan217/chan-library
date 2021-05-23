@@ -4,7 +4,7 @@ import Author from './Author'
 const AuthorIndex = (props) => {
   return (
     <div>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Name</th>

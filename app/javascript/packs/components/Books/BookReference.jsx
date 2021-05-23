@@ -2,9 +2,9 @@ import React from 'react';
 
 const BookReference = (props) => {
   return (
-    <div>
+    <li>
       {props.reference.title}
-    </div>
+    </li>
   );
 };
 

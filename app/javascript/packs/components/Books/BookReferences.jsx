@@ -4,6 +4,7 @@ import BookReference from './BookReference'
 const BookReferences = (props) => {
   return (
     <div>
+      <br/>
       <b>Linked Titles</b>
       {props.references.map((reference, index) => (
         <BookReference key={index} reference={reference} />

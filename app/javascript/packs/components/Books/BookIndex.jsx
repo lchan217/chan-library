@@ -4,7 +4,7 @@ import Book from './Book'
 const BookIndex = (props) => {
   return (
     <div>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Title</th>

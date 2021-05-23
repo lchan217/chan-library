@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AuthorIndex from '../Authors/AuthorIndex'
 import AuthorShow from '../Authors/AuthorShow'
 import Spinner from '../../ui/Spinner'
+import Modal from '../../ui/Modal'
 
 const AuthorContainer = () => {
   const [ authors, setAuthors ] = useState([])
@@ -36,27 +37,20 @@ const AuthorContainer = () => {
   }
   
   let authorData = <Spinner />
-
-  if(authorShowPage){
-    authorData = (
-      <div>
-        <button onClick={goBack}>Go Back</button>
-        <AuthorShow author={author}/>
-      </div>
-    )
-  } else if(!isLoading){
+  if(!isLoading){
     authorData = (
       <div onClick={handleClick}>
         <AuthorIndex authors={authors} />
       </div>
     )
   }
-
+  
   return (
     <div >
       <h1>Authors</h1>
-      <h6>Pick a row to see the author and their Books</h6>
+      <h6>Pick a row to see the author and their books</h6>
       {authorData}
+      {authorShowPage && <Modal onClose={goBack}><AuthorShow author={author}/></Modal>}
     </div>
   );
 }

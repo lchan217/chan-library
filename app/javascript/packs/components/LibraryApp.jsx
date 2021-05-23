@@ -42,7 +42,9 @@ const LibraryApp = () => {
         <li className="nav-item" onClick={() => handleClick('books')}>Books</li>
         <li className="nav-item" onClick={() => handleClick('references')}>References</li>
       </nav>
-      {showContent}
+      <div className='library-content'>
+        {showContent}
+      </div>
     </div>
   ) 
 }

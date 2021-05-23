@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BookShow from '../Books/BookShow'
 import BookIndex from '../Books/BookIndex'
 import Spinner from '../../ui/Spinner'
+import Modal from '../../ui/Modal'
 
 const BookContainer = () => {
   const [ books, setBooks ] = useState([])
@@ -35,15 +36,7 @@ const BookContainer = () => {
   }
 
   let bookData = <Spinner />
-
-  if(bookShowPage){
-    bookData = (
-      <div>
-        <button onClick={goBack}>Go Back</button>
-        <BookShow book={book}/>
-      </div>
-    )
-  } else if(!isLoading){
+  if(!isLoading){
     bookData = (
       <div onClick={handleClick}>
         <BookIndex books={books} />
@@ -51,14 +44,15 @@ const BookContainer = () => {
     )
   }
 
-    return (
-      <div>
-        <h1>Books</h1>
-        <h6>Pick a row to see the authors and shared references</h6>
-        {bookData}
-      </div>
-    );
- 
+  return (
+    <div>
+      <h1>Books</h1>
+      <h6>Pick a row to see the authors and shared references</h6>
+      {bookData}
+      {bookShowPage && <Modal onClose={goBack}> <BookShow book={book}/></Modal>}
+    </div>
+  );
+
 }
 
 export default BookContainer;

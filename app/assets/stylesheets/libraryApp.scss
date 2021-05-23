@@ -8,3 +8,21 @@
   cursor: pointer;
   font-size: 20px;
 }
+
+.library-content {
+  margin: 25px 50px;
+}
+
+table {
+  li {
+    list-style-type: none;
+  }
+
+  .row-with-hover {
+    cursor: pointer;
+  }
+
+  .row-with-hover:hover {
+    color: #ff8c69;
+  }
+}
