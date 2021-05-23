@@ -8,6 +8,7 @@ const ReferenceForm = (props) => {
   const [ bookAttributes, setBookAttributes] = useState([])
   const [ errorMessage, setErrorMessage] = useState('')
   const [ showForm, setShowForm ] = useState(true)
+  const errorModalClasses = 'error-modal'
 
   useEffect(() => {
     setReferenceName(reference.name)
@@ -73,7 +74,7 @@ const ReferenceForm = (props) => {
 
 	return (
     <div>
-      {errorMessage && <Modal onClose={clearError}>{errorMessage}</Modal>}
+      {errorMessage && <Modal cssClasses={errorModalClasses} onClose={clearError}>{errorMessage}</Modal>}
       {showForm && 
       <Modal onClose={props.closeForm}>
         <form onSubmit={handleSubmit} className="reference-form">
