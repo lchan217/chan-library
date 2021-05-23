@@ -9,15 +9,23 @@ class Api::V1::ReferencesController < ApplicationController
     end
 
     def create
-      reference = Reference.create(reference_params)
-      reference.parse_params(params)
-      reference.save
+        @reference = Reference.new(reference_params)
+        @reference.parse_params(params)
+        if @reference.save
+            render json: { status: "Success"}
+        else 
+            render json: { status: "Error", error: @reference.errors.full_messages.to_sentence }
+        end
     end
 
     def update
         @reference.update(reference_params)
         @reference.parse_params(params)
-        @reference.save
+        if @reference.save
+            render json: { status: "Success"}
+        else 
+            render json: { status: "Error", message: @reference.errors.full_messages.to_sentence }
+        end
     end
 
     def destroy

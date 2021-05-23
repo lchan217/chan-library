@@ -1,0 +1,25 @@
+.errorModal {
+  position: fixed;
+  z-index: 1000;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 4px;
+  width: 50%;
+  display: block;
+  margin: auto;
+  padding: 80px;
+  text-align: center;
+  background-color: white;
+  font-size: 30px;
+
+  .close-button {
+    background-color: #cbc3e3;
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 18px;
+    display: block;
+    margin: 15px auto;
+  }
+}

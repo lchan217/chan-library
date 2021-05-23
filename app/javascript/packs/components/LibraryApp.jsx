@@ -37,7 +37,7 @@ const LibraryApp = () => {
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <li className="nav-item" onClick={() => handleClick('authors')}>Authors</li>
         <li className="nav-item" onClick={() => handleClick('books')}>Books</li>
         <li className="nav-item" onClick={() => handleClick('references')}>References</li>

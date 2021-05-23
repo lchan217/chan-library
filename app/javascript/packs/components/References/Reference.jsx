@@ -15,7 +15,6 @@ const Reference = (props) => {
     .then(response => {
       setBooks(response)
     })
-    .catch(error => console.log(error))
   }, [])
 
   const deleteReference = id => {

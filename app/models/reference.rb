@@ -4,6 +4,9 @@ class Reference < ApplicationRecord
     has_many :books
     accepts_nested_attributes_for :books
 
+    validates :name, presence: true
+    validates :name, uniqueness: true
+
     def parse_params(params)
       book_params = params[:book_attributes]
       books.clear
