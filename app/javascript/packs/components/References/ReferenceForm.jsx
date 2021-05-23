@@ -7,6 +7,7 @@ const ReferenceForm = (props) => {
   const [ referenceName, setReferenceName] = useState('')
   const [ bookAttributes, setBookAttributes] = useState([])
   const [ errorMessage, setErrorMessage] = useState('')
+  const [ showForm, setShowForm ] = useState(true)
 
   useEffect(() => {
     setReferenceName(reference.name)
@@ -66,40 +67,43 @@ const ReferenceForm = (props) => {
 		setBookAttributes(selectedList)
 	}
 
-  const clearError = useCallback(() => {
-    setErrorMessage('')
-  }, [])
-
+    const clearError = useCallback(() => {
+        setErrorMessage('')
+    }, [])
 
 	return (
     <div>
       {errorMessage && <Modal onClose={clearError}>{errorMessage}</Modal>}
-      <form onSubmit={handleSubmit} className="reference-form">
-        <label>
-          Name:
-          <input 
-            type="text" 
-            value={referenceName} 
-            onChange={event => {
-                setReferenceName(event.target.value)
-            }}
+      {showForm && 
+      <Modal onClose={props.closeForm}>
+        <form onSubmit={handleSubmit} className="reference-form">
+            <label>
+            Name:
+            <input 
+                type="text" 
+                value={referenceName} 
+                onChange={event => {
+                    setReferenceName(event.target.value)
+                }}
+                className="form-item"
+            />
+            </label>
+            <br/>
+            <Multiselect
+            options={allBooks}
+            displayValue="title"
+            value={bookAttributes}
+            avoidHighlightFirstOption={true}
+            onSelect={onSelect}
+            onRemove={onRemove}
+            selectedValues={books}
             className="form-item"
-          />
-        </label>
-        <br/>
-        <Multiselect
-          options={allBooks}
-          displayValue="title"
-          value={bookAttributes}
-          avoidHighlightFirstOption={true}
-          onSelect={onSelect}
-          onRemove={onRemove}
-          selectedValues={books}
-          className="form-item"
-          placeholder="Select Books"
-        />
-        <button className="btn btn-secondary form-item submit-button">Submit</button>
-      </form>
+            placeholder="Select Books"
+            />
+            <button className="btn btn-secondary form-item submit-button">Submit</button>
+        </form>
+      </Modal>
+    }
     </div>
 	);
 };
