@@ -38,17 +38,21 @@ const Reference = (props) => {
     setEditId(id)
   }
 
+  const handleFormClose = () => {
+    setShowEditForm(false)
+  }
+
   return (
-    <div>
+    <div className="reference-cards">
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{name}</h5>
           <div className="card-text">
             <ReferenceBook books={props.reference.books} />
-            <button onClick={() => editReference(id)}>Edit Reference</button>
-            <button onClick={() => deleteReference(id)}>Delete Reference</button>
+            <button className="btn btn-secondary reference-action" onClick={() => editReference(id)}>Edit Reference</button>
+            <button className="btn btn-secondary reference-action" onClick={() => deleteReference(id)}>Delete Reference</button>
 
-            {showEditForm && <ReferenceForm books={props.reference.books} reference={reference} allBooks={books} editId={editId}/>}
+            {showEditForm && <ReferenceForm closeForm={handleFormClose} books={props.reference.books} reference={reference} allBooks={books} editId={editId}/>}
           </div>
         </div>
       </div>

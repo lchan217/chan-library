@@ -1,3 +1,29 @@
 // Place all the styles related to the references controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.reference-cards {
+  margin: 12px 0;
+
+  .reference-action {
+    margin: 12px;
+  }
+}
+
+.reference-form {
+  .form-item {
+    margin: 10px 0 10px 4px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .form-item::placeholder {
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  .submit-button {
+    display: block;
+    right: 0;
+    bottom: 0;
+    margin: 20px;
+    position: absolute;
+  }
+}

@@ -13,14 +13,10 @@
   background-color: white;
 
   .close-button {
-    background-color: #ff8c69;
-    border-radius: 4px;
-    padding: 10px 12px;
-    font-size: 18px;
     display: block;
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: 0;
     margin: 20px;
   }
 
@@ -31,4 +27,8 @@
   li {
     text-align: left;
   }
+}
+
+.error-modal {
+  z-index: 1100;
 }
