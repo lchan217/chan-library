@@ -1,0 +1,32 @@
+.app {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar li {
+  list-style-type: none;
+}
+
+.nav-item {
+  margin: 0 24px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.library-content {
+  margin: 25px 50px;
+}
+
+table {
+  li {
+    list-style-type: none;
+  }
+
+  .row-with-hover {
+    cursor: pointer;
+  }
+
+  .row-with-hover:hover {
+    color: #ff8c69;
+  }
+}

@@ -7,7 +7,7 @@ const Author = (props) => {
   return (
     <>
       <tr>
-        <td id={id}>{name}</td>
+        <td id={id} className='row-with-hover'>{name}</td>
         <td>
           {books.map((book, index) => (
             <AuthorBook 

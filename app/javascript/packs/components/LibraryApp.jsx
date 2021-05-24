@@ -1,38 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import AuthorContainer from './Containers/AuthorContainer'
 import BookContainer from './Containers/BookContainer'
 import ReferenceContainer from './Containers/ReferenceContainer'
-class LibraryApp extends React.Component {
-  state = {
-    showBooks: false
-  }
 
-  handleClick = () => {
-    const currentView = this.state.showBooks
-    this.setState({ showBooks: !currentView })
-  }
+const LibraryApp = () => {
+  const [showBooks, setShowBooks] = useState(false)
+  const [showAuthors, setShowAuthors] = useState(true)
+  const [showReferences, setShowReferences] = useState(false)
 
-  render() {
-    let showContent = null
-    let page = null
-    if(this.state.showBooks){
-      showContent = <BookContainer />
-      page = "Author"
-    } else {
-      showContent = <AuthorContainer />
-      page = "Book"
+  const handleClick = (page) => {
+    if(page === 'authors'){
+      setShowBooks(false)
+      setShowAuthors(true)
+      setShowReferences(false)
+    } else if(page === 'books'){
+      setShowBooks(true)
+      setShowAuthors(false)
+      setShowReferences(false)
+    } else if(page === 'references'){
+      setShowBooks(false)
+      setShowAuthors(false)
+      setShowReferences(true)
     }
+  }
 
-    return (
-      <div>
-        <p>Library App</p>
-        <button onClick={this.handleClick}>Switch to {page} View</button>
-        <ReferenceContainer />
+  let showContent = null
+
+  if(showBooks){
+    showContent = <BookContainer />
+  } else if(showAuthors){
+    showContent = <AuthorContainer />
+  } else if(showReferences){
+    showContent = <ReferenceContainer />
+  }
+
+  return (
+    <div className='app'>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <li className="nav-item" onClick={() => handleClick('authors')}>Authors</li>
+        <li className="nav-item" onClick={() => handleClick('books')}>Books</li>
+        <li className="nav-item" onClick={() => handleClick('references')}>References</li>
+      </nav>
+      <div className='library-content'>
         {showContent}
       </div>
-    )
-  }
+    </div>
+  ) 
 }
 
 document.addEventListener('turbolinks:load', () => {

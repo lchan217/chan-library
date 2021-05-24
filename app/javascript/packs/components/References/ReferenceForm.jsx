@@ -1,62 +1,111 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useCallback }  from 'react';
 import { Multiselect } from 'multiselect-react-dropdown';
+import Modal from '../../ui/Modal'
 
 const ReferenceForm = (props) => {
-  const { books, reference, allBooks } = props
-	const [ referenceName, setReferenceName] = useState('')
-	const [ bookAttributes, setBookAttributes] = useState([])
+  const { books, reference, allBooks, editId } = props
+  const [ referenceName, setReferenceName] = useState('')
+  const [ bookAttributes, setBookAttributes] = useState([])
+  const [ errorMessage, setErrorMessage] = useState('')
+  const [ showForm, setShowForm ] = useState(true)
+  const errorModalClasses = 'error-modal'
 
   useEffect(() => {
     setReferenceName(reference.name)
     setBookAttributes(reference.books)
   }, [reference])
 
-	const handleSubmit = () => {
-		const body = {
-			name: referenceName,
-			book_attributes: bookAttributes
-		};
-			
-		fetch("http://localhost:3000/api/v1/references", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json"
-			},
-			body: JSON.stringify(body)
-		})
-			.then(resp => resp.json())
+	const handleSubmit = (event) => {
+    event.preventDefault()
+    const body = {
+      name: referenceName,
+      book_attributes: bookAttributes
+    };
+    if(editId){
+      fetch(`http://localhost:3000/api/v1/references/${editId}`, {
+      method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+          },
+        body: JSON.stringify(body)
+        })
+      .then(resp => resp.json())
+      .then(data => {
+        if(data.status === "Error"){
+          setErrorMessage(data.error)
+        } else {
+          setErrorMessage('')
+          location.reload()
+        }
+      })
+    } else {
+      fetch("http://localhost:3000/api/v1/references", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+        },
+        body: JSON.stringify(body)
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        if(data.status === "Error"){
+          setErrorMessage(data.error)
+        } else {
+          setErrorMessage('')
+          location.reload()
+        }
+      })
+    }	
 	}
 
 	const onSelect = (selectedList, selectedItem) => {
-		setBookAttributes([...bookAttributes, selectedItem])
+		setBookAttributes(selectedList)
 	}
 
 	const onRemove  = (selectedList, selectedItem) => {
-		setBookAttributes(bookAttributes.filter(book => book !== selectedItem))
+		setBookAttributes(selectedList)
 	}
 
-	return (
-		<form onSubmit={handleSubmit}>
-			<input 
-				type="text" 
-				value={referenceName} 
-				onChange={event => {
-					setReferenceName(event.target.value)
-				}}
-      />
+    const clearError = useCallback(() => {
+        setErrorMessage('')
+    }, [])
 
-			<Multiselect
-				options={allBooks}
-				displayValue="title"
-				value={bookAttributes}
-				avoidHighlightFirstOption={true}
-				onSelect={onSelect}
-				onRemove={onRemove}
-        selectedValues={books}
-			/>
-			<button>Submit</button>
-		</form>
+	return (
+    <div>
+      {errorMessage && <Modal cssClasses={errorModalClasses} onClose={clearError}>{errorMessage}</Modal>}
+      {showForm && 
+      <Modal onClose={props.closeForm}>
+        <form onSubmit={handleSubmit} className="reference-form">
+            <label>
+            Name:
+            <input 
+                type="text" 
+                value={referenceName} 
+                onChange={event => {
+                    setReferenceName(event.target.value)
+                }}
+                className="form-item"
+            />
+            </label>
+            <br/>
+            <Multiselect
+            options={allBooks}
+            displayValue="title"
+            value={bookAttributes}
+            avoidHighlightFirstOption={true}
+            onSelect={onSelect}
+            onRemove={onRemove}
+            selectedValues={books}
+            className="form-item"
+            placeholder="Select Books"
+            />
+            <button className="btn btn-secondary form-item submit-button">Submit</button>
+        </form>
+      </Modal>
+    }
+    </div>
 	);
 };
 

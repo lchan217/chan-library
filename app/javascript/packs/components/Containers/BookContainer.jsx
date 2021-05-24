@@ -1,68 +1,58 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import BookShow from '../Books/BookShow'
 import BookIndex from '../Books/BookIndex'
+import Spinner from '../../ui/Spinner'
+import Modal from '../../ui/Modal'
 
-class BookContainer extends Component {
-  state = {
-    books: [], 
-    bookShowPage: false,
-    book: []
-  }
+const BookContainer = () => {
+  const [ books, setBooks ] = useState([])
+  const [ bookShowPage, setBookShowPage ] = useState(false)
+  const [ book, setBook ] = useState([])
+  const [ isLoading, setIsLoading ] = useState(true)
 
-  componentDidMount() {
+  useEffect(()=> {
     fetch("http://localhost:3000/api/v1/books")
-      .then(response => response.json())
-      .then(response => {
-        this.setState({
-            books: response
-        })
-      })
-      .catch(error => console.log(error))
-  }
+    .then(response => response.json())
+    .then(response => {
+      setBooks(response)
+      setIsLoading(false)
+    })
+    .catch(error => console.log(error))
+  }, [])
 
-  handleClick = (event) => {
+  const handleClick = (event) => {
     const id = event.target.id
     fetch(`http://localhost:3000/api/v1/books/${id}`)
     .then(response => response.json())
     .then(response => {
-      this.setState({
-        book: response,
-        bookShowPage: true
-      })
+      setBook(response)
+      setBookShowPage(true)
     })
     .catch(error => console.log(error))
   }
 
-  goBack = () => {
-    this.setState({ bookShowPage: false})
+  const goBack = () => {
+    setBookShowPage(false)
   }
 
-  render() {
-    let bookData = null
-
-    if(this.state.bookShowPage){
-      bookData = (
-        <div>
-          <button onClick={this.goBack}>Go Back</button>
-          <BookShow book={this.state.book}/>
-        </div>
-      )
-    } else {
-      bookData = (
-        <div onClick={this.handleClick}>
-          <BookIndex books={this.state.books} />
-        </div>
-      )
-    }
-
-    return (
-      <div>
-        <h1>Books</h1>
-        <h6>Pick a row to see the authors and shared references</h6>
-        {bookData}
+  let bookData = <Spinner />
+  if(!isLoading){
+    bookData = (
+      <div onClick={handleClick}>
+        <BookIndex books={books} />
       </div>
-    );
+    )
   }
+
+  return (
+    <div>
+      <h1>Books</h1>
+      <h6>Pick a row to see the authors and shared references</h6>
+      {bookData}
+      {bookShowPage && <Modal onClose={goBack}> <BookShow book={book}/></Modal>}
+    </div>
+  );
+
 }
 
 export default BookContainer;
