@@ -17,6 +17,5 @@ Clone the project from GitHub and run the steps below in order to run the projec
 
 ## To Do:
 
-- Styling
-- NavBar and Routes
+- NavBar and Routes with react-router-dom
 - Writing tests
